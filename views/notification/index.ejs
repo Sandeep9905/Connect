@@ -1,0 +1,22 @@
+<%- include("../partials/header") %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+               <h1 style="text-align: center"> Notifications..</h1>
+                 <ul>
+                     <div id="indexNotify">
+                    <% allNotifications.forEach(function(notification) { %>
+                        <div class="alert alert-success" role="alert">
+                            <li style="list-style: none;margin: 1rem 1rem;">
+                                <a style="text-decoration: none" href="/viewCamp/<%=notification.campgroundId %>">
+                                    <%= notification.username %> created a new Post
+                                </a>
+                                </li>
+                        </div>
+                    <% }); %>   
+                     </div>
+                 </ul>
+        </div>
+    </div>
+ </div>
+<%- include("../partials/footer") %>

@@ -1,0 +1,55 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+    <% if(currentUser && currentUser.isAdmin){ %>
+        <h1>You are a admin..</h1>
+     <% } %>   
+</div>
+
+
+ <div class="container">
+     <br>
+    <header class="jumbotron">
+       <div class="container"> 
+         <h1 class="display-3">Welcome to the Post Grounds</h1>
+            <p>create some awesome Posts so that it goes higher..!</p>
+            <p>
+            <a class="btn btn-success" href="viewCamp/create">Create some new Posts!</a>
+            </p>
+       </div>
+    </header>
+    <div class="row" style="display: flex; flex-wrap: wrap;">
+        <div class="col-md-12">
+            <% if(noMatch !== null){ %>
+                <h3><%=noMatch%></h3>
+                <p>
+                    <form class="form-inline" action="/viewCamp" method="GET">
+                      <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </p>
+                <% } %>
+
+        </div>
+        <% data.forEach(function(data){ %>
+            <div class="col-sm-6 col-md-4">
+                <div class="img-thumbnail">
+                   <img style="width: 100%;" src="<%= data.image %>">
+                   <div class="caption">
+                       <h5 style="text-align: center;"><%= data.name %></h5>
+                       <div>
+                        <span class="badge label-primary"><i class="fas fa-thumbs-up"></i> <%= data.likes.length %></span>
+                       </div>
+                   </div>
+                   <p class="text-center">
+                    <a href="viewCamp/<%= data._id %>" class="btn btn-primary btn-sm">read more</a>
+                   </p>
+                </div>
+                <br>
+            </div>
+        <% }); %>
+    </div>
+ </div>
+<a href="/">Go to home</a>
+
+<%- include("../partials/footer") %>

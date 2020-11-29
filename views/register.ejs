@@ -1,0 +1,67 @@
+<%- include("./partials/header") %>
+
+    <div class="container">
+    <div class="jumbotron">
+        <h1  class="display-3" style="text-align: center;">Sign Up Plzz..</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+        <div class="col-sm-12 col-md-6" id="register">
+        <form action="/register" method="POST" enctype="multipart/form-data" >
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                </div>
+                <input type="text" class="form-control" name="username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">@</span>
+                </div>
+                <input type="text" class="form-control" name="firstName" placeholder="First Name" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">@</span>
+                </div>
+                <input type="text" class="form-control" name="lastName" placeholder="Last Name" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+
+            <div class="input-group mb-3">
+                <input type="email" class="form-control" name="email" placeholder="email" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">@example.com</span>
+                </div>
+            </div> 
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                </div>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" name="avatar" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                  <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                </div>
+                <input type="password" class="form-control" name="password" placeholder="password" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-shield"></i></span>
+                </div>
+                <input type="text" class="form-control" name="adminCode" placeholder="For Admin use only" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block">Sign Up</button>
+            </div>
+          </form>
+         </div>
+        </div>
+      </div>
+    </div>
+
+<%- include("./partials/footer") %>

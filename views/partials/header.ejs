@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Connect</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://kit.fontawesome.com/1477cfd1eb.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/stylesheets/app.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+            <a class="navbar-brand" href="/">Connect</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+             <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse nav-right justify-content-end" id="navbarNav">
+             <ul class="navbar-nav">
+            <% if(!currentUser){ %> 
+                <li class="nav-item">
+                  <a class="nav-link" href="/register"><strong>Sign Up</strong></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/login"><strong>Sign In</strong></a>
+                </li>
+            <%  }else{ %>
+      <!--------------dropdown for notifications--------------------------------->
+             
+        
+                  <div id="notify" class="dropdown">
+                    <a  role="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      notifications<span class="badge badge-pill badge-success"><%=notifications.length%></span>
+                    </a>
+                      <ul class="dropdown-menu"  aria-labelledby="dropdownMenu2">
+                        <div class="row">
+                            <div class="col-md-12">
+                        <li id="notificationHeader"><a style="text-decoration: none" href="/notifications">view past notifications</a></li>
+                        <% notifications.forEach(function(notification){%>
+                           <li id="notificationHeader">
+                               <a style="text-decoration: none" href="/notifications/<%= notification.id %>"><%= notification.username %>created a new Campground</a>
+                           </li>                          
+                          <% })%>
+                        </div>
+                        </div>
+                      </ul>
+                  </div>
+            
+      <!--------------dropdown for notifications--------------------------------->
+                <li class="nav-item">
+                  <li class="nav-link"><a href="/user/<%=currentUser._id %>"><%= currentUser.username%></a></li>
+                  <a class="nav-link" href="/logout"><strong>Log out</strong></a>
+                </li>
+             <% } %>
+            </ul>
+         </div>
+      </nav>
+      <br>
+    <!-------------message flashing----------->
+   <div class="container">
+     <% if(danger && danger.length > 0){ %>
+      <div class="alert alert-danger" role="alert">
+         <%= danger %>
+      </div>
+      <% } %>
+    </div>
+    <div class="container">
+      <% if(success && success.length > 0){%>
+      <div class="alert alert-success" role="alert">
+        <%= success %>
+      </div>
+      <% } %>
+   </div>
+
+      
+      
+  
+    
+
+
+
+    

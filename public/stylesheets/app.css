@@ -1,0 +1,41 @@
+.badge-pill{
+  margin: 0.4em;
+}
+#viewpoint{
+    margin-top: 12px;
+}
+.card-title a{
+    text-decoration: none;
+}
+#deleteForShow{
+    display: inline;
+}
+#forgot{
+ list-style: none;
+ color: green;
+}
+#notify{
+    padding-top:0.6em;
+    color:black;
+    font-style: inherit;
+}
+#formComment{
+    border-left-width: 0.3rem;
+    border-left-color:green;
+}
+#formEditComment{
+    border-left-width: 0.3rem;
+    border-left-color:orange;
+
+}
+#register{
+    width: 40rem;
+    margin: 3rem auto;
+}
+#notificationHeader{
+    margin: 0.2rem 0.1rem;
+    padding: 0.1rem 0.4rem;
+}
+#indexNotify{
+    text-align: center;
+}

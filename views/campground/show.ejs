@@ -1,0 +1,199 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+   <div class="row">
+      <div class="col-md-3">
+         <br>
+          <p class="lead">Yelp Camp</p>
+          <div class="list-group">
+             <li class="list-group-item active">Info 1</li>
+             <li class="list-group-item">Info 2</li>
+             <li class="list-group-item">Info 3</li>
+          </div>
+      </div>
+      <div class="col-md-9" id="viewpoint">
+         <div class="card mb-3">
+            <img src="<%= campground.image %>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><a href="#"><%= campground.name %></a><p class="card-text float-right"><small class="text-muted">$<%= campground.price%></small></p></h5>
+              <!---------------------------------like form button------------------------>
+              <form action="/viewCamp/<%=campground._id%>/like" method="POST">
+               <div class="btn-group">
+                  <% if(currentUser && campground.likes.some(function(like){
+                     return like.equals(currentUser._id)
+                  })) {%>
+                     <button class="btn btn-sm btn-primary">
+                           <i class="fas fa-thumbs-up"></i>Liked (<%=campground.likes.length%>)
+                     </button>
+                  <% }else { %>
+                     <button class="btn btn-sm btn-secondary">
+                        <i class="fas fa-thumbs-up"></i>Like (<%=campground.likes.length%>)
+                     </button>
+                   <% } %>  
+                   <br>
+                   
+                   <button type="button" class="btn btn-sm btn-default" data-toggle="modal" 
+                                   data-target="#campgroundLikes">See more details
+                   </button>
+                </div>
+              </form>
+              <!---------------------------------like form button------------------------>
+              <p class="card-text"><%= campground.description %></p>
+              <p class="card-text"><small class="text-muted"><em>
+                 Submitted By : <a href="/user/<%=campground.author.id %>" ><%= campground.author.username %> </a>,  <%= moment(campground.createdAt).fromNow()%>
+              </em></small></p>
+<!----------------verifying the user --------------------------->    
+              <% if(currentUser &&campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){%>
+               
+                 <a class="btn btn-warning btn-sm" href="/viewCamp/<%= campground._id%>/edit">Edit</a>
+                 <form id="deleteForShow" action="/viewCamp/<%=campground._id%>?_method=Delete" method="POST">
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                 </form>   
+           <% }%>    
+<!-------------------------------->
+            </div>
+         </div>
+         <div class="card p-3">
+            <!--Setting up the add new comment button that is used for collapsing-->
+            <div class="row">
+               <div class="col-md-6">
+                  <h4><strong>Comments <i class="fa fa-comment-alt"></i></strong></h4>
+               </div>
+               <div class="col-md-6 text-right">
+                  <a class="btn btn-success pull-right" role="button" data-toggle="collapse" href="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
+                     <i class="fas fa-plus"></i> Add new comment</a>
+               </div>
+            </div>
+            <!--Collapse Add a comment form START-->
+            <div class="collapse" id="collapseComment">
+               <br>
+              <div id="formComment" class="card m-1">
+                  <% if(!currentUser) { %>
+                <!--If the user is not logged in, direct him to the login page-->
+                <h5>You need to login before you can comment. <a href="/login">Click here</a> to go to the login page.</h5>
+                  <% } %>
+                  <% if(currentUser) { %>
+                <!--If the user is logged in, show the new comment form-->
+                <div class="m-1 p-1">
+                  <h4>Write your comment <i class="fas fa-pencil-alt"></i></h4>
+                <form id="add-comment-form" action="/viewCamp/<%=campground._id %>/comments" method="POST">
+                  <div class="form-group">
+                    <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
+                  </div>
+                  <div class="form-group">
+                    <textarea class="form-control" name="comment[text]" placeholder="Write your comment..." form="add-comment-form" rows="5" cols="70" required></textarea>
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-success btn-sm">Comment <i class="fa fa-edit"></i></button>
+                  </div>
+                </form>
+                </div>
+                  <% } %>
+              </div>
+            </div>
+            <!--Collapse Add a comment form END-->
+      
+            <hr>
+      
+            <!--Check if there are comments, if there are none say no comments.-->
+              <% if (campground.comment.length === 0) { %>
+            <em style="color: grey;">No comments yet.</em>
+              <% } %>
+      
+            <!--Display comments by looping through them-->
+              <% campground.comment.forEach(function(comment) { %>
+            <div class="row">
+              <div class="col-md-12">
+                <strong>
+                    <% if (currentUser && currentUser._id.equals(comment.author.id) || currentUser && currentUser.isAdmin) { %>
+                  <!--If the current user owns the comment, change the color of the user icon-->
+                  <i class="fa fa-user" style="color: #ffbb33;"></i> 
+                    <% } else { %>
+                  <!--Else just display it black-->
+                  <i class="fa fa-user"></i> 
+                    <% } %>
+                  <!--Print out the author username-->
+                    <%= comment.author.username %>
+                </strong>
+                <!--Show when the comment was made-->
+                <span class="float-right"><%= moment(comment.createdAt).fromNow() %></span>
+                <!--Printing the comment-->
+                <p><%= comment.text %></p>
+                <!--If the visitor is logged in and the owner of the comment, show the edit and delete buttons-->
+                  <% if (currentUser && currentUser._id.equals(comment.author.id)|| currentUser && currentUser.isAdmin) { %>
+                <!--Edit button used for collapsing the edit comment form-->
+                <a class="btn btn-sm btn-warning" role="button" data-toggle="collapse" href="#collapseEdit<%= comment._id %>" aria-expanded="false" aria-controls="collapse<%= comment._id %>">
+                  Edit</a>
+                <!--Delete comment button-->
+                <form id="delete-form" action="/viewCamp/<%=campground._id%>/comments/<%=comment._id%>?_method=delete" method="POST" style="display: inline;">
+                  <button class="btn btn-sm btn-danger">Delete</button>
+                </form>
+                <!--Edit comment form-->
+                <div class="collapse" id="collapseEdit<%= comment._id %>">
+                   <br>
+                  <div id="formEditComment" class="card m-1">
+                     <div class="m-1 p-1">
+                    <h4>Edit your comment <i class="fa fa-edit"></i></h4>
+                    <form id="edit-comment-form<%= comment._id %>" action="/viewCamp/<%=campground._id%>/comments/<%=comment._id%>?_method=put" method="POST">
+                      <div class="form-group">
+                        <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
+                      </div>
+                      <div class="form-group">
+                        <textarea class="form-control" name="comment[text]" placeholder="Your comment text..." form="edit-comment-form<%= comment._id %>" rows="5" cols="70" required><%= comment.text %></textarea>
+                      </div>
+                      <div class="form-group">
+                        <button class="btn btn-warning btn-sm">Edit comment <i class="fa fa-edit"></i></button>
+                      </div>
+                    </form>
+                     </div>
+                  </div>
+                </div>
+                  <% } %>
+                <hr>
+              </div>
+            </div>
+              <% }) %>
+          </div>
+          <!--COMMENT SECTION END-->
+      </div>
+   </div>
+</div>
+<!---------------------------------CAMPGROUND LIKES MODAL---------------->
+<div id="campgroundLikes" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <!--------------modal content-------->
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Campground likes: <%=campground.likes.length%></h4>
+         </div>
+         <div class="modal-body">
+            <table class="table table-striped">
+               <thead>
+                  <tr>
+                     <th>Liked by:</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <% campground.likes.forEach(function(like){%>
+                      <tr>
+                         <td><span class="badge"><i class="fas fa-user"></i></span><%= like.username %></td>
+                      </tr>
+                  <% })%>   
+                  <% if(campground.likes.length === 0){ %>
+                     <tr>
+                        <td><em>No likes yet</em></td>
+                     </tr>
+                  <% } %>   
+               </tbody>
+            </table>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<%- include("../partials/footer") %>
+

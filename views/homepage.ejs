@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Connect</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/stylesheets/landing.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+    </head>
+    <body>
+    
+     <div class="container">
+            <% if(danger && danger.length > 0){ %>
+             <div class="alert alert-danger" role="alert">
+                <%= danger %>
+             </div>
+             <% } %>
+        <% if(success && success.length > 0){ %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+        <% } %>
+    </div>
+    <div id="landing-header">
+     <h1 id="FrontPageText">Create some new Posts</h1>
+     <p class="lead" style="color:white">Create some posts and follow others...!</p>
+        <a href="/viewCamp" class="btn btn-lg btn-success">View All Posts</a>
+        <br>
+        <br>
+        <div class="container">
+            <form class="form-inline" action="/viewCamp" method="GET">
+              <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-warning" type="submit">Search</button>
+            </form>
+        </div>
+    </div>    
+    <ul class="slideshow">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+<%- include("partials/footer") %>

@@ -1,0 +1,47 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h1 style="text-align: center">profile </h1>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-sm-12 col-md-8">
+                            <img style="width: 100%" class="img-thumbnail" src="<%=user.avatar%>" alt="profile pic">
+                            <div class="caption">
+                                <p><%=user.firstName +" " +" "+user.lastName%></p>
+                                <p><a href="mailto:<%=user.email%>"><%= user.email%></a></p>
+            <!--------------------------adding user follower  options ----------->
+                            <% if(!currentUser._id.equals(user._id)){ %>
+                                 <p>
+                                    <a href="/follow/<%=user.id %>" class="btn btn-success">Follow <%= user.username%></a>
+                                </p>
+                            <% } %>
+            <!--------------------------adding user follower  options ----------->
+                            </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h1 style="text-align:center">Posts created by:<%=user.firstName %></h1>
+            <ul style="list-style: none">
+           <% campground.forEach(function(campground){%>
+            <div class="alert alert-dark" role="alert">
+                <li><a style="text-decoration: none" href="/viewCamp/<%=campground.id%>"><%= campground.name %></a></li>
+              </div>
+              
+            <% }) %>
+            </ul>
+            <div class="container">
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde alias dolorem deserunt omnis atque quam autem ducimus eius inventore! Doloremque nam beatae, possimus nostrum ipsam similique quos? Iusto, alias earum!
+                Lorem ipsum dolor sit amet consectetur adpisicing elit. Repellat, ea reiciendis amet ipsum enim dolorem reprehenderit saepe explicabo quod nihil debitis, perspiciatis dicta ex! Accusamus, dolores blanditiis. Illum quos laboriosam accusamus beatae odio dolor, ipsum inventore officiis reprehenderit nesciunt necessitatibus alias, error blanditiis perferendis quia fuga! Maxime commodi mollitia praesentium totam recusandae necessitatibus nam officiis.
+            </p>
+            </div>
+        </div>
+    </div> 
+</div>
+<%- include("../partials/footer") %>
