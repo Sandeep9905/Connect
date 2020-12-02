@@ -16,7 +16,7 @@ var seedDb = require("./seeds");
 //executing seedDb
 //seedDb();
 
-mongoose.connect("mongodb+srv://campwala:pandit@cluster0-t7iak.mongodb.net/campwala?retryWrites=true&w=majority",{useNewUrlParser:true , useUnifiedTopology:true ,useFindAndModify: false ,useCreateIndex:true}).catch(err=>{
+mongoose.connect("data base connection url",{useNewUrlParser:true , useUnifiedTopology:true ,useFindAndModify: false ,useCreateIndex:true}).catch(err=>{
     console.log(err);
 });
 var app = express();
